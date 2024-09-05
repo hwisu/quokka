@@ -1,0 +1,26 @@
+type Query {
+    cat(id: Int!): Cat
+}
+
+type Mutation {
+    createCat(createCatDto: CreateCatDto!): String
+    updateCat(id: Int!, updateCatDto: UpdateCatDto!): String
+}
+
+type Cat {
+    name: String!
+    age: Int!
+    breed: String!
+}
+
+input CreateCatDto {
+    name: String!
+    age: Int!
+    breed: String!
+}
+
+input UpdateCatDto {
+    name: String!
+    age: Int!
+    breed: String!
+}
