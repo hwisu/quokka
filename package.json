@@ -5,7 +5,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "start": "node ./dist/main.js"
+    "start": "node ./dist/main.js",
+    "dev": "tsc --build --clean && tsc --build && node ./dist/main.js",
+    "docker": "docker build . -t quokka ",
+    "prepare": "husky"
   },
   "author": "hwisu",
   "license": "MIT",
@@ -22,6 +25,7 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "@types/node": "^22.5.3"
+    "@types/node": "^22.5.3",
+    "gitmoji-cli": "^9.4.0"
   }
 }
