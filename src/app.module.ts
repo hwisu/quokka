@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
 import { CatsModule } from './cats/cats.module';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { SqliteDriver } from '@mikro-orm/sqlite';
 import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
 import {GraphQLModule} from "@nestjs/graphql";
 import { join } from 'path';
+import {MikroOrmCoreModule} from "@mikro-orm/nestjs/mikro-orm-core.module";
+import config from './mikro-orm.config';
+import {ConfigModule, ConfigService} from "@nestjs/config";
+
 
 @Module({
   imports: [
-    MikroOrmModule.forRoot({
-      entities: ['./dist/entities'],
-      entitiesTs: ['./src/entities'],
-      dbName: 'not-a-postgres.sqlite3',
-      driver: SqliteDriver,
-      autoLoadEntities: true,
+    ConfigModule.forRoot({ isGlobal: true }),
+    MikroOrmCoreModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        ...config,
+      }),
+      inject: [ConfigService],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
