@@ -8,8 +8,8 @@
     "start": "node ./dist/main.js",
     "dev": "tsc --build --clean && tsc --build && node ./dist/main.js",
     "docker": "docker build . -t quokka ",
-    "prepare": "husky",
-    "mgr-create": "mikro-orm migration:create"
+    "mgr-create": "mikro-orm migration:create",
+    "mgr-up": "mikro-orm migration:up"
   },
   "author": "hwisu",
   "license": "MIT",
