@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CatsModule } from './cats/cats.module';
 import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
 import {GraphQLModule} from "@nestjs/graphql";
 import { join } from 'path';
 import {MikroOrmCoreModule} from "@mikro-orm/nestjs/mikro-orm-core.module";
 import config from './mikro-orm.config';
 import {ConfigModule, ConfigService} from "@nestjs/config";
+import {BookModule} from "./books.root/book.module";
+import {LibraryMemberModule} from "./library-members.root/library-member.module";
+import {LoanModule} from "./loans.root/loan.module";
 
 
 @Module({
@@ -25,6 +27,9 @@ import {ConfigModule, ConfigService} from "@nestjs/config";
       },
       playground: false,
     }),
-    CatsModule],
+    BookModule,
+    LibraryMemberModule,
+    LoanModule,
+  ],
 })
 export class AppModule {}

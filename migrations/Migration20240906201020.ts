@@ -6,4 +6,8 @@ export class Migration20240906201020 extends Migration {
     this.addSql('create table `cat` (`_id` integer not null primary key autoincrement, `hidden_field` integer not null);');
   }
 
+  override async down(): Promise<void> {
+    this.addSql('drop table if exists `cat`;');
+  }
+
 }

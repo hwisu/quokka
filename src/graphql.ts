@@ -8,31 +8,62 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export interface CreateCatDto {
-    name: string;
-    age: number;
-    breed: string;
+export enum LoanStatus {
+    ACTIVE = "ACTIVE",
+    RETURNED = "RETURNED",
+    OVERDUE = "OVERDUE"
 }
 
-export interface UpdateCatDto {
-    name: string;
-    age: number;
-    breed: string;
+export enum BookStatus {
+    AVAILABLE = "AVAILABLE",
+    BORROWED = "BORROWED",
+    RESERVED = "RESERVED"
+}
+
+export interface Book {
+    id: string;
+    title: string;
+    author: string;
+    publishedDate: string;
+    status: BookStatus;
 }
 
 export interface IQuery {
-    cat(id: number): Nullable<Cat> | Promise<Nullable<Cat>>;
+    getAllBooks(): Book[] | Promise<Book[]>;
+    getBookById(id: string): Book | Promise<Book>;
+    getAllMembers(): LibraryMember[] | Promise<LibraryMember[]>;
+    getMemberById(id: string): LibraryMember | Promise<LibraryMember>;
+    getMemberLoans(id: string): Loan[] | Promise<Loan[]>;
+    getLoanById(id: string): Nullable<Loan> | Promise<Nullable<Loan>>;
 }
 
 export interface IMutation {
-    createCat(createCatDto: CreateCatDto): Nullable<string> | Promise<Nullable<string>>;
-    updateCat(id: number, updateCatDto: UpdateCatDto): Nullable<string> | Promise<Nullable<string>>;
+    addBook(title: string, author: string, publishedDate: string): Book | Promise<Book>;
+    removeBook(id: string): boolean | Promise<boolean>;
+    createMember(name: string): LibraryMember | Promise<LibraryMember>;
+    createLoan(bookId: string, memberId: string): Nullable<Loan> | Promise<Nullable<Loan>>;
+    returnLoan(loanId: string): Nullable<Loan> | Promise<Nullable<Loan>>;
+    extendLoan(loanId: string, days: number): Nullable<Loan> | Promise<Nullable<Loan>>;
+    reserveBook(loanId: string, memberId: string): Nullable<Loan> | Promise<Nullable<Loan>>;
 }
 
-export interface Cat {
+export interface LibraryMember {
+    id: string;
     name: string;
-    age: number;
-    breed: string;
+    membershipDate: string;
+    loanIds: string[];
+}
+
+export interface Loan {
+    id: string;
+    book: Book;
+    borrower: LibraryMember;
+    loanDate: string;
+    dueDate?: Nullable<string>;
+    returnDate?: Nullable<string>;
+    status: LoanStatus;
+    extensionCount: number;
+    reservedBy?: Nullable<LibraryMember>;
 }
 
 type Nullable<T> = T | null;

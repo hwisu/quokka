@@ -1,0 +1,32 @@
+type LibraryMember {
+    id: ID!
+    name: String!
+    membershipDate: String!
+    loanIds: [ID!]!
+}
+
+type Loan {
+    id: ID!
+    book: Book!
+    borrower: LibraryMember!
+    loanDate: String!
+    dueDate: String
+    returnDate: String
+    status: LoanStatus!
+}
+
+enum LoanStatus {
+    ACTIVE
+    RETURNED
+    OVERDUE
+}
+
+type Query {
+    getAllMembers: [LibraryMember!]!
+    getMemberById(id: ID!): LibraryMember!
+    getMemberLoans(id: ID!): [Loan!]!
+}
+
+type Mutation {
+    createMember(name: String!): LibraryMember!
+}
