@@ -3,8 +3,8 @@
   "tables": [
     {
       "columns": {
-        "_id": {
-          "name": "_id",
+        "id": {
+          "name": "id",
           "type": "integer",
           "unsigned": true,
           "autoincrement": true,
@@ -13,8 +13,28 @@
           "length": null,
           "mappedType": "integer"
         },
-        "created_at": {
-          "name": "created_at",
+        "title": {
+          "name": "title",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "text"
+        },
+        "author": {
+          "name": "author",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "text"
+        },
+        "published_date": {
+          "name": "published_date",
           "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
@@ -24,12 +44,12 @@
           "mappedType": "datetime"
         }
       },
-      "name": "cat",
+      "name": "book",
       "indexes": [
         {
           "keyName": "primary",
           "columnNames": [
-            "_id"
+            "id"
           ],
           "composite": false,
           "constraint": true,
@@ -43,8 +63,8 @@
     },
     {
       "columns": {
-        "_id": {
-          "name": "_id",
+        "id": {
+          "name": "id",
           "type": "integer",
           "unsigned": true,
           "autoincrement": true,
@@ -53,18 +73,18 @@
           "length": null,
           "mappedType": "integer"
         },
-        "killed_by__id": {
-          "name": "killed_by__id",
-          "type": "integer",
+        "name": {
+          "name": "name",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "length": null,
-          "mappedType": "integer"
+          "mappedType": "text"
         },
-        "created_at": {
-          "name": "created_at",
+        "membership_date": {
+          "name": "membership_date",
           "type": "datetime",
           "unsigned": false,
           "autoincrement": false,
@@ -74,22 +94,12 @@
           "mappedType": "datetime"
         }
       },
-      "name": "rat",
+      "name": "library_member",
       "indexes": [
-        {
-          "columnNames": [
-            "killed_by__id"
-          ],
-          "composite": false,
-          "keyName": "rat_killed_by__id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
         {
           "keyName": "primary",
           "columnNames": [
-            "_id"
+            "id"
           ],
           "composite": false,
           "constraint": true,
@@ -98,20 +108,119 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {
-        "rat_killed_by__id_foreign": {
-          "constraintName": "rat_killed_by__id_foreign",
-          "columnNames": [
-            "killed_by__id"
-          ],
-          "localTableName": "rat",
-          "referencedColumnNames": [
-            "_id"
-          ],
-          "referencedTableName": "cat",
-          "updateRule": "cascade"
+      "foreignKeys": {},
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "book_id": {
+          "name": "book_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "borrower_id": {
+          "name": "borrower_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "loan_date": {
+          "name": "loan_date",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "datetime"
+        },
+        "due_date": {
+          "name": "due_date",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": null,
+          "mappedType": "datetime"
+        },
+        "return_date": {
+          "name": "return_date",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": null,
+          "mappedType": "datetime"
+        },
+        "reserved_by_id": {
+          "name": "reserved_by_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "extension_count": {
+          "name": "extension_count",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "default": "0",
+          "mappedType": "integer"
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "default": "'active'",
+          "mappedType": "text"
         }
       },
+      "name": "loan",
+      "indexes": [
+        {
+          "keyName": "primary",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
       "nativeEnums": {}
     }
   ],

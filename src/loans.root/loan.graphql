@@ -1,0 +1,41 @@
+type Loan {
+    id: ID!
+    book: Book!
+    borrower: LibraryMember!
+    loanDate: String!
+    dueDate: String
+    returnDate: String
+    status: LoanStatus!
+    extensionCount: Int!
+    reservedBy: LibraryMember
+}
+
+enum LoanStatus {
+    ACTIVE
+    RETURNED
+    OVERDUE
+}
+
+type Book {
+    id: ID!
+    title: String!
+    status: BookStatus!
+}
+
+enum BookStatus {
+    AVAILABLE
+    BORROWED
+    RESERVED
+}
+
+
+type Query {
+    getLoanById(id: ID!): Loan
+}
+
+type Mutation {
+    createLoan(bookId: ID!, memberId: ID!): Loan
+    returnLoan(loanId: ID!): Loan
+    extendLoan(loanId: ID!, days: Int!): Loan
+    reserveBook(loanId: ID!, memberId: ID!): Loan
+}

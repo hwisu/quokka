@@ -11,4 +11,14 @@ export class Migration20240906201903 extends Migration {
     this.addSql('alter table `cat` add column `created_at` datetime not null;');
   }
 
+  override async down(): Promise<void> {
+    // Reverse the creation of the `rat` table and index
+    this.addSql('drop index `rat_killed_by__id_index`;');
+    this.addSql('drop table if exists `rat`;');
+
+    // Reverse the column modifications on `cat` table
+    this.addSql('alter table `cat` drop column `created_at`;');
+    this.addSql('alter table `cat` add column `hidden_field` integer not null;');
+  }
+
 }
