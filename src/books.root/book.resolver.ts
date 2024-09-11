@@ -15,22 +15,29 @@ export class BookResolver {
     // 특정 ID의 책 조회
     @Query(() => Book)
     async getBookById(@Args('id') id: number): Promise<Book> {
-        const book = await this.bookService.findOne(id);
-        if (!book) {
-            throw new Error('책을 찾을 수 없습니다.');
-        }
-        return book;
+        return this.bookService.findOne(id);
+    }
+
+    // ISBN으로 책 조회
+    @Query(() => Book)
+    async getBookByISBN(@Args('isbn') isbn: string): Promise<Book> {
+        return this.bookService.findByISBN(isbn);
     }
 
     // 새 책 추가
     @Mutation(() => Book)
     async addBook(
         @Args('title') title: string,
-        @Args('author') author: string,
+        @Args('authors') authors: string[],
         @Args('publishedDate') publishedDate: string,
+        @Args('isbn') isbn: string,
+        @Args('publisherId') publisherId: number,
+        @Args('translator') translator?: string,
+        @Args('editor') editor?: string,
+        @Args('reviewer') reviewer?: string[],
     ): Promise<Book> {
-        const date = new Date(publishedDate); // String to Date 변환
-        return this.bookService.addBook(title, author, date);
+        const date = new Date(publishedDate);
+        return this.bookService.addBook(title, authors, date, isbn, publisherId, translator, editor, reviewer);
     }
 
     // 책 삭제

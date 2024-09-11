@@ -1,16 +1,38 @@
+type Publisher {
+    id: ID!
+    name: String!
+    registrationNumber: String!
+    establishedDate: String!
+}
+
 type Book {
     id: ID!
     title: String!
-    author: String!
+    authors: [String!]!  # 저자 배열
     publishedDate: String!
+    isbn: String!
+    translator: String
+    editor: String
+    reviewer: [String!]
+    publisher: Publisher!  # 출판사 객체
 }
 
 type Query {
     getAllBooks: [Book!]!
     getBookById(id: ID!): Book!
+    getBookByISBN(isbn: String!): Book!
 }
 
 type Mutation {
-    addBook(title: String!, author: String!, publishedDate: String!): Book!
+    addBook(
+        title: String!,
+        authors: [String!]!,
+        publishedDate: String!,
+        isbn: String!,
+        publisherId: ID!,
+        translator: String,
+        editor: String,
+        reviewer: [String!]
+    ): Book!
     removeBook(id: ID!): Boolean!
 }

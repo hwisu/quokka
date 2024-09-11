@@ -18,3 +18,5 @@ npm-debug.log
 /dist
 
 /temp
+
+src/migrations/.snapshot-not-a-postgres.sqlite3.json

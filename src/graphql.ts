@@ -20,17 +20,30 @@ export enum BookStatus {
     RESERVED = "RESERVED"
 }
 
+export interface Publisher {
+    id: string;
+    name: string;
+    registrationNumber: string;
+    establishedDate: string;
+}
+
 export interface Book {
     id: string;
     title: string;
-    author: string;
+    authors: string[];
     publishedDate: string;
+    isbn: string;
+    translator?: Nullable<string>;
+    editor?: Nullable<string>;
+    reviewer?: Nullable<string[]>;
+    publisher: Publisher;
     status: BookStatus;
 }
 
 export interface IQuery {
     getAllBooks(): Book[] | Promise<Book[]>;
     getBookById(id: string): Book | Promise<Book>;
+    getBookByISBN(isbn: string): Book | Promise<Book>;
     getAllMembers(): LibraryMember[] | Promise<LibraryMember[]>;
     getMemberById(id: string): LibraryMember | Promise<LibraryMember>;
     getMemberLoans(id: string): Loan[] | Promise<Loan[]>;
@@ -38,7 +51,7 @@ export interface IQuery {
 }
 
 export interface IMutation {
-    addBook(title: string, author: string, publishedDate: string): Book | Promise<Book>;
+    addBook(title: string, authors: string[], publishedDate: string, isbn: string, publisherId: string, translator?: Nullable<string>, editor?: Nullable<string>, reviewer?: Nullable<string[]>): Book | Promise<Book>;
     removeBook(id: string): boolean | Promise<boolean>;
     createMember(name: string): LibraryMember | Promise<LibraryMember>;
     createLoan(bookId: string, memberId: string): Nullable<Loan> | Promise<Nullable<Loan>>;
